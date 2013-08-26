@@ -6,7 +6,7 @@ package umbara.dhit.service;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import umbara.dhit.model.person;
 
@@ -15,12 +15,14 @@ import umbara.dhit.model.person;
  * @author ADM Billet
  */
 @Repository
-public class personDAO {
+public class personDAO extends HibernateDaoSupport{
 
     @Autowired
-    SessionFactory sessionFactory;
+    public void setSuperSessionFactory(SessionFactory sessionFactory){
+        super.setSessionFactory(sessionFactory);
+    }
 
     public void save(person p) {
-     sessionFactory.getCurrentSession().save(p);
+     getHibernateTemplate().save(p);
     }
 }
